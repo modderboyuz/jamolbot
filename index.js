@@ -30,7 +30,7 @@ bot.onText(/\/start(.*)/, async (msg, match) => {
       const sessionToken = parts[3]
       const timestamp = parts[4]
       const clientId = parts[5] || "jamolstroy_web"
-      
+
       await handleWebLogin(chatId, userId, msg.from, sessionToken, timestamp, clientId)
     } else {
       await handleWebLogin(chatId, userId, msg.from)
@@ -79,7 +79,14 @@ async function handleStart(chatId, userId, user) {
 }
 
 // Web login
-async function handleWebLogin(chatId, userId, user, sessionToken = null, timestamp = null, clientId = "jamolstroy_web") {
+async function handleWebLogin(
+  chatId,
+  userId,
+  user,
+  sessionToken = null,
+  timestamp = null,
+  clientId = "jamolstroy_web",
+) {
   try {
     // Foydalanuvchi mavjudligini tekshirish
     const { data: existingUser } = await supabase.from("users").select("*").eq("telegram_id", userId).single()
@@ -107,8 +114,8 @@ async function handleWebLogin(chatId, userId, user, sessionToken = null, timesta
             inline_keyboard: [
               [
                 { text: "✅ Ruxsat berish", callback_data: `approve_login_${sessionToken}` },
-                { text: "❌ Rad etish", callback_data: `reject_login_${sessionToken}` }
-              ]
+                { text: "❌ Rad etish", callback_data: `reject_login_${sessionToken}` },
+              ],
             ],
           },
         },
@@ -142,16 +149,16 @@ async function handleWebLogin(chatId, userId, user, sessionToken = null, timesta
 }
 
 // Callback query handler
-bot.on('callback_query', async (callbackQuery) => {
+bot.on("callback_query", async (callbackQuery) => {
   const chatId = callbackQuery.message.chat.id
   const userId = callbackQuery.from.id
   const data = callbackQuery.data
 
-  if (data.startsWith('approve_login_')) {
-    const sessionToken = data.replace('approve_login_', '')
+  if (data.startsWith("approve_login_")) {
+    const sessionToken = data.replace("approve_login_", "")
     await handleLoginApproval(chatId, userId, sessionToken, true)
-  } else if (data.startsWith('reject_login_')) {
-    const sessionToken = data.replace('reject_login_', '')
+  } else if (data.startsWith("reject_login_")) {
+    const sessionToken = data.replace("reject_login_", "")
     await handleLoginApproval(chatId, userId, sessionToken, false)
   }
 
@@ -173,7 +180,7 @@ async function handleLoginApproval(chatId, userId, sessionToken, approved) {
     const { error } = await supabase
       .from("login_sessions")
       .update({
-        status: approved ? 'approved' : 'rejected',
+        status: approved ? "approved" : "rejected",
         user_id: approved ? existingUser.id : null,
         approved_at: approved ? new Date().toISOString() : null,
       })
@@ -187,23 +194,15 @@ async function handleLoginApproval(chatId, userId, sessionToken, approved) {
     }
 
     if (approved) {
-      await bot.editMessageText(
-        `✅ Login tasdiqlandi!\n\n` +
-        `Websaytda avtomatik tizimga kirasiz.`,
-        {
-          chat_id: chatId,
-          message_id: callbackQuery.message.message_id,
-        }
-      )
+      await bot.editMessageText(`✅ Login tasdiqlandi!\n\n` + `Websaytda avtomatik tizimga kirasiz.`, {
+        chat_id: chatId,
+        message_id: callbackQuery.message.message_id,
+      })
     } else {
-      await bot.editMessageText(
-        `❌ Login rad etildi.\n\n` +
-        `Xavfsizlik uchun login so'rovi bekor qilindi.`,
-        {
-          chat_id: chatId,
-          message_id: callbackQuery.message.message_id,
-        }
-      )
+      await bot.editMessageText(`❌ Login rad etildi.\n\n` + `Xavfsizlik uchun login so'rovi bekor qilindi.`, {
+        chat_id: chatId,
+        message_id: callbackQuery.message.message_id,
+      })
     }
   } catch (error) {
     console.error("Login approval error:", error)

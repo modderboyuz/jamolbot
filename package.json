@@ -4,22 +4,22 @@
   "description": "Telegram bot with Supabase integration",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",                     // Command to start the bot
-    "build": "echo 'No build step required!'",    // Placeholder build script, can be customized for frontend
-    "dev": "npm start"                            // For local development
+    "start": "node index.js",
+    "build": "echo 'No build step required!'",
+    "dev": "npm start"
   },
   "dependencies": {
-    "node-telegram-bot-api": "^0.57.0",          // Telegram bot API library
-    "@supabase/supabase-js": "^1.29.2",          // Supabase client library
-    "webpack-cli": "^5.0.0"                      // Webpack CLI (if using Webpack for bundling)
+    "node-telegram-bot-api": "^0.57.0",
+    "@supabase/supabase-js": "^1.29.2",
+    "webpack-cli": "^5.0.0"
   },
   "devDependencies": {
-    "webpack": "^5.0.0",                         // Webpack (optional, if used for bundling frontend)
-    "webpack-dev-server": "^4.0.0"               // Webpack dev server (optional)
+    "webpack": "^5.0.0",
+    "webpack-dev-server": "^4.0.0"
   },
   "engines": {
-    "node": ">=16.0.0",                          // Specify minimum Node.js version
-    "npm": ">=7.0.0"                             // Specify minimum NPM version
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
   },
   "author": "Modderboy",
   "license": "MIT",

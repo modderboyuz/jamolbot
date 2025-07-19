@@ -1,5 +1,27 @@
 {
+  "name": "jamolstroy-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot with Supabase integration",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js"
-  }
+    "start": "node index.js",                     // Command to start the bot
+    "build": "echo 'No build step required!'",    // Placeholder build script, can be customized for frontend
+    "dev": "npm start"                            // For local development
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.57.0",          // Telegram bot API library
+    "@supabase/supabase-js": "^1.29.2",          // Supabase client library
+    "webpack-cli": "^5.0.0"                      // Webpack CLI (if using Webpack for bundling)
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0",                         // Webpack (optional, if used for bundling frontend)
+    "webpack-dev-server": "^4.0.0"               // Webpack dev server (optional)
+  },
+  "engines": {
+    "node": ">=16.0.0",                          // Specify minimum Node.js version
+    "npm": ">=7.0.0"                             // Specify minimum NPM version
+  },
+  "author": "Modderboy",
+  "license": "MIT",
+  "private": true
 }
